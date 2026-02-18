@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Baby Boo Albi 💕</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #0f0f0f;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .font-script {
+            font-family: 'Dancing Script', cursive;
+        }
+
+        /* Custom Cursor */
+        .cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ff0040;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.2s;
+            mix-blend-mode: difference;
+        }
+
+        .cursor-follower {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 0, 64, 0.1);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9998;
+            transition: transform 0.1s;
+        }
+
+        /* Smooth Scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: radial-gradient(circle at center, #1a0010 0%, #000000 100%);
+            overflow: hidden;
+        }
+
+        .hero-bg-text {
+            position: absolute;
+            font-size: 20vw;
+            font-weight: 800;
+            opacity: 0.03;
+            white-space: nowrap;
+            pointer-events: none;
+            animation: float-text 20s linear infinite;
+        }
+
+        @keyframes float-text {
+            0% { transform: translateX(-50%); }
+            100% { transform: translateX(50%); }
+        }
+
+        .heart-container {
+            position: relative;
+            z-index: 10;
+        }
+
+        .big-heart {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(135deg, #ff0040 0%, #ff4d8d 100%);
+            position: relative;
+            transform: rotate(-45deg);
+            animation: heartbeat 2s ease-in-out infinite;
+            box-shadow: 0 0 100px rgba(255, 0, 64, 0.5);
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .big-heart:hover {
+            transform: rotate(-45deg) scale(1.1);
+        }
+
+        .big-heart::before,
+        .big-heart::after {
+            content: '';
+            width: 200px;
+            height: 200px;
+            position: absolute;
+            background: linear-gradient(135deg, #ff0040 0%, #ff4d8d 100%);
+            border-radius: 50%;
+        }
+
+        .big-heart::before {
+            top: -100px;
+            left: 0;
+        }
+
+        .big-heart::after {
+            left: 100px;
+            top: 0;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: rotate(-45deg) scale(1); }
+            25% { transform: rotate(-45deg) scale(1.05); }
+            50% { transform: rotate(-45deg) scale(1); }
+            75% { transform: rotate(-45deg) scale(1.05); }
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 20;
+            margin-top: 60px;
+        }
+
+        .glitch {
+            font-size: 5rem;
+            font-weight: 800;
+            position: relative;
+            text-shadow: 0 0 20px rgba(255, 0, 64, 0.5);
+            animation: glitch 3s infinite;
+        }
+
+        @keyframes glitch {
+            0%, 100% { text-shadow: -2px -2px 0 #ff0040, 2px 2px 0 #00fff9; }
+            25% { text-shadow: 2px 2px 0 #ff0040, -2px -2px 0 #00fff9; }
+            50% { text-shadow: -2px 2px 0 #ff0040, 2px -2px 0 #00fff9; }
+            75% { text-shadow: 2px -2px 0 #ff0040, -2px 2px 0 #00fff9; }
+        }
+
+        .subtitle {
+            font-size: 3rem;
+            color: #ff4d8d;
+            margin-top: 20px;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-20px); }
+        }
+
+        /* Sections */
+        section {
+            padding: 100px 20px;
+            position: relative;
+        }
+
+        .section-title {
+            font-size: 4rem;
+            text-align: center;
+            margin-bottom: 60px;
+            background: linear-gradient(135deg, #ff0040, #ff4d8d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Love Meter */
+        .love-meter-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            padding: 60px;
+            backdrop-filter: blur(10px);
+        }
+
+        .meter {
+            height: 60px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .meter-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #ff0040, #ff4d8d, #ff0040);
+            background-size: 200% 100%;
+            border-radius: 30px;
+            transition: width 3s ease-out;
+            position: relative;
+            overflow: hidden;
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        .meter-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shine 2s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .meter-text {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 3rem;
+            font-weight: 800;
+        }
+
+        /* Cards */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            height: 400px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .card:hover::before {
+            left: 100%;
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+        .card.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-back {
+            transform: rotateY(180deg);
+            background: linear-gradient(135deg, #ff0040, #ff4d8d);
+            border-radius: 20px;
+            padding: 20px;
+            margin: -40px;
+        }
+
+        .card-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .card-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        /* Letter Section */
+        .letter-container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 77, 141, 0.3);
+            border-radius: 30px;
+            padding: 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .letter-container::before {
+            content: '❤';
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 10rem;
+            opacity: 0.05;
+        }
+
+        .letter-text {
+            font-size: 1.2rem;
+            line-height: 2;
+            color: #e0e0e0;
+        }
+
+        .letter-text p {
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .signature {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            color: #ff4d8d;
+            text-align: right;
+            margin-top: 40px;
+        }
+
+        /* STICKY NOTES WALL - REPLACING GALLERY */
+        .sticky-wall {
+            background: linear-gradient(135deg, #2a1f1f 0%, #1a1515 100%);
+            border-radius: 30px;
+            padding: 60px 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            box-shadow: inset 0 0 100px rgba(0,0,0,0.5);
+            border: 8px solid #3a2f2f;
+        }
+
+        .sticky-wall::before {
+            content: 'LOVE NOTES FOR ALBI';
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #ff0040;
+            padding: 10px 30px;
+            border-radius: 10px;
+            font-weight: 800;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .sticky-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .sticky-note {
+            aspect-ratio: 1;
+            padding: 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            transform-origin: center;
+        }
+
+        .sticky-note:nth-child(1) { background: linear-gradient(135deg, #ff6b6b, #ee5a5a); transform: rotate(-3deg); }
+        .sticky-note:nth-child(2) { background: linear-gradient(135deg, #ffd93d, #f4c430); transform: rotate(2deg); }
+        .sticky-note:nth-child(3) { background: linear-gradient(135deg, #6bcf7f, #5ab769); transform: rotate(-2deg); }
+        .sticky-note:nth-child(4) { background: linear-gradient(135deg, #4d96ff, #3a7bd5); transform: rotate(3deg); }
+        .sticky-note:nth-child(5) { background: linear-gradient(135deg, #ff8ce6, #e67ee0); transform: rotate(-4deg); }
+        .sticky-note:nth-child(6) { background: linear-gradient(135deg, #a78bfa, #8b5cf6); transform: rotate(1deg); }
+
+        .sticky-note:hover {
+            transform: rotate(0deg) scale(1.1);
+            z-index: 10;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        .sticky-note.revealed {
+            animation: flip-note 0.6s ease;
+        }
+
+        @keyframes flip-note {
+            0% { transform: rotateY(0deg); }
+            50% { transform: rotateY(90deg); }
+            100% { transform: rotateY(0deg); }
+        }
+
+        .sticky-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .sticky-text {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.3rem;
+            color: #333;
+            font-weight: 700;
+        }
+
+        .sticky-hidden {
+            display: none;
+            font-size: 1rem;
+            color: #333;
+            margin-top: 10px;
+            font-weight: 600;
+        }
+
+        .sticky-note.revealed .sticky-hidden {
+            display: block;
+            animation: fade-in 0.5s ease;
+        }
+
+        .sticky-note.revealed .sticky-icon {
+            display: none;
+        }
+
+        @keyframes fade-in {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* LOVE CHECKLIST */
+        .checklist-container {
+            max-width: 600px;
+            margin: 60px auto 0;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 40px;
+            border: 2px dashed rgba(255, 0, 64, 0.3);
+        }
+
+        .checklist-title {
+            text-align: center;
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            color: #ff4d8d;
+            font-weight: 600;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            margin-bottom: 10px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .checklist-item:hover {
+            background: rgba(255, 0, 64, 0.1);
+            transform: translateX(10px);
+        }
+
+        .checklist-item.checked {
+            opacity: 0.6;
+            text-decoration: line-through;
+        }
+
+        .checklist-item.checked .check-box {
+            background: #ff0040;
+            border-color: #ff0040;
+        }
+
+        .check-box {
+            width: 24px;
+            height: 24px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 5px;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .check-box::after {
+            content: '✓';
+            color: white;
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .checklist-item.checked .check-box::after {
+            opacity: 1;
+        }
+
+        /* Final Section */
+        .final-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle at center, #1a0008 0%, #000000 100%);
+            text-align: center;
+        }
+
+        .big-text {
+            font-size: 8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ff0040, #ff4d8d, #ff0040);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient 3s ease infinite;
+            margin-bottom: 30px;
+        }
+
+        @keyframes gradient {
+            0%, 100% { background-position: 0% center; }
+            50% { background-position: 100% center; }
+        }
+
+        .celebrate-btn {
+            padding: 20px 60px;
+            font-size: 1.5rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, #ff0040, #ff4d8d);
+            border: none;
+            border-radius: 50px;
+            color: white;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s;
+            box-shadow: 0 0 40px rgba(255, 0, 64, 0.4);
+        }
+
+        .celebrate-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .celebrate-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .celebrate-btn:hover::before {
+            left: 100%;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .glitch { font-size: 3rem; }
+            .subtitle { font-size: 2rem; }
+            .section-title { font-size: 2.5rem; }
+            .big-text { font-size: 4rem; }
+            .sticky-grid { grid-template-columns: repeat(2, 1fr); }
+            .cards-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg-text">I LOVE YOU ALBI I LOVE YOU ALBI</div>
+        
+        <div class="heart-container" onclick="explodeHearts()">
+            <div class="big-heart"></div>
+        </div>
+        
+        <div class="hero-content">
+            <h1 class="glitch font-script">Happy Valentine's Day</h1>
+            <h2 class="subtitle font-script">My Baby Boo Albi</h2>
+        </div>
+
+        <div class="scroll-indicator">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                <path d="M12 5v14M19 12l-7 7-7-7"/>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Love Meter Section -->
+    <section>
+        <h2 class="section-title font-script">Our Love Meter</h2>
+        <div class="love-meter-container">
+            <div class="meter">
+                <div class="meter-fill" id="meterFill"></div>
+            </div>
+            <div class="meter-text" id="meterText">0%</div>
+            <p style="text-align: center; margin-top: 20px; color: #888;">Measuring my love for you...</p>
+        </div>
+    </section>
+
+    <!-- Reasons Cards -->
+    <section>
+        <h2 class="section-title font-script">Why I Love You</h2>
+        <div class="cards-grid">
+            <div class="card" onclick="flipCard(this)">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <div class="card-icon">✨</div>
+                        <h3 class="card-title">Your Smile</h3>
+                        <p style="color: #666;">Click to reveal</p>
+                    </div>
+                    <div class="card-back">
+                        <p class="card-text">Your smile is the first thing I think of every morning. It lights up my world brighter than the sun ever could.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" onclick="flipCard(this)">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <div class="card-icon">🎵</div>
+                        <h3 class="card-title">Your Laugh</h3>
+                        <p style="color: #666;">Click to reveal</p>
+                    </div>
+                    <div class="card-back">
+                        <p class="card-text">Your laugh is my favorite sound. It's the melody that plays in my heart all day long.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" onclick="flipCard(this)">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <div class="card-icon">🌟</div>
+                        <h3 class="card-title">Your Heart</h3>
+                        <p style="color: #666;">Click to reveal</p>
+                    </div>
+                    <div class="card-back">
+                        <p class="card-text">Your kindness and love make me a better person. You have the purest heart I've ever known.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Love Letter -->
+    <section>
+        <h2 class="section-title font-script">My Letter To You</h2>
+        <div class="letter-container">
+            <div class="letter-text">
+                <p>My Dearest Albi,</p>
+                <p>Words cannot capture what you mean to me. You are my best friend, my soulmate, my everything. Every moment with you feels like a beautiful dream I never want to end.</p>
+                <p>You've shown me what true love really is - patient, kind, and unconditional. With you, I am home.</p>
+                <p>I promise to love you fiercely, to support your dreams, and to stand by your side through every chapter of our lives.</p>
+                <p>Forever and always,</p>
+            </div>
+            <div class="signature">Your Baby Boo</div>
+        </div>
+    </section>
+
+    <!-- REPLACED SECTION: Love Notes Wall & Checklist -->
+    <section>
+        <h2 class="section-title font-script">Love Notes Wall</h2>
+        
+        <div class="sticky-wall">
+            <div class="sticky-grid">
+                <div class="sticky-note" onclick="revealNote(this)">
+                    <div class="sticky-icon">💌</div>
+                    <div class="sticky-text">Open Me</div>
+                    <div class="sticky-hidden">"You are my favorite notification"</div>
+                </div>
+                
+                <div class="sticky-note" onclick="revealNote(this)">
+                    <div class="sticky-icon">🌹</div>
+                    <div class="sticky-text">Click Me</div>
+                    <div class="sticky-hidden">"Every love song is about you"</div>
+                </div>
+                
+                <div class="sticky-note" onclick="revealNote(this)">
+                    <div class="sticky-icon">☕</div>
+                    <div class="sticky-text">Read Me</div>
+                    <div class="sticky-hidden">"You're the first thing on my mind"</div>
+                </div>
+                
+                <div class="sticky-note" onclick="revealNote(this)">
+                    <div class="sticky-icon">🌙</div>
+                    <div class="sticky-text">Secret</div>
+                    <div class="sticky-hidden">"I fall asleep thinking of you"</div>
+                </div>
+                
+                <div class="sticky-note" onclick="revealNote(this)">
+                    <div class="sticky-icon">🔐</div>
+                    <div class="sticky-text">Unlock</div>
+                    <div class="sticky-hidden">"You're my safe place"</div>
+                </div>
+                
+                <div class="sticky-note" onclick="revealNote(this)">
+                    <div class="sticky-icon">💫</div>
+                    <div class="sticky-text">Magic</div>
+                    <div class="sticky-hidden">"You make ordinary moments magical"</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Love Checklist -->
+        <div class="checklist-container">
+            <h3 class="checklist-title">📋 To Do: Love Albi</h3>
+            <div class="checklist-item" onclick="toggleCheck(this)">
+                <div class="check-box"></div>
+                <span>Morning "I love you" text</span>
+            </div>
+            <div class="checklist-item" onclick="toggleCheck(this)">
+                <div class="check-box"></div>
+                <span>Surprise hug attack</span>
+            </div>
+            <div class="checklist-item" onclick="toggleCheck(this)">
+                <div class="check-box"></div>
+                <span>Share favorite song of the day</span>
+            </div>
+            <div class="checklist-item" onclick="toggleCheck(this)">
+                <div class="check-box"></div>
+                <span>Plan our next adventure</span>
+            </div>
+            <div class="checklist-item" onclick="toggleCheck(this)">
+                <div class="check-box"></div>
+                <span>Remind you how beautiful you are</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final Section -->
+    <section class="final-section">
+        <h1 class="big-text font-script">I Love You</h1>
+        <p style="font-size: 1.5rem; color: #ff4d8d; margin-bottom: 40px;">To infinity and beyond, Albi</p>
+        <button class="celebrate-btn" onclick="grandFinale()">Celebrate Us 🎉</button>
+    </section>
+
+    <script>
+        // Custom Cursor
+        const cursor = document.querySelector('.cursor');
+        const follower = document.querySelector('.cursor-follower');
+        
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            
+            setTimeout(() => {
+                follower.style.left = e.clientX + 'px';
+                follower.style.top = e.clientY + 'px';
+            }, 100);
+        });
+
+        document.addEventListener('mousedown', () => {
+            cursor.style.transform = 'scale(0.8)';
+        });
+
+        document.addEventListener('mouseup', () => {
+            cursor.style.transform = 'scale(1)';
+        });
+
+        // GSAP Animations
+        gsap.registerPlugin();
+
+        // Hero animations
+        gsap.to('.subtitle', {
+            opacity: 1,
+            y: 0,
+            duration: 1.5,
+            delay: 0.5,
+            ease: 'power3.out'
+        });
+
+        // Scroll animations
+        gsap.utils.toArray('section').forEach((section, i) => {
+            if (i === 0) return;
+            
+            gsap.from(section, {
+                opacity: 0,
+                y: 50,
+                duration: 1,
+                scrollTrigger: {
+                    trigger: section,
+                    start: 'top 80%',
+                    toggleActions: 'play none none reverse'
+                }
+            });
+        });
+
+        // Love Meter Animation
+        let meterAnimated = false;
+        window.addEventListener('scroll', () => {
+            const meter = document.querySelector('.love-meter-container');
+            const rect = meter.getBoundingClientRect();
+            
+            if (rect.top < window.innerHeight && !meterAnimated) {
+                meterAnimated = true;
+                animateMeter();
+            }
+        });
+
+        function animateMeter() {
+            const fill = document.getElementById('meterFill');
+            const text = document.getElementById('meterText');
+            let width = 0;
+            
+            const interval = setInterval(() => {
+                if (width >= 100) {
+                    clearInterval(interval);
+                    text.innerHTML = '∞%';
+                    text.style.color = '#ff0040';
+                    
+                    confetti({
+                        particleCount: 100,
+                        spread: 70,
+                        origin: { y: 0.6 },
+                        colors: ['#ff0040', '#ff4d8d', '#ffffff']
+                    });
+                } else {
+                    width++;
+                    fill.style.width = width + '%';
+                    text.textContent = width + '%';
+                }
+            }, 20);
+        }
+
+        // Card Flip
+        function flipCard(card) {
+            card.classList.toggle('flipped');
+        }
+
+        // Sticky Note Reveal
+        function revealNote(note) {
+            if (!note.classList.contains('revealed')) {
+                note.classList.add('revealed');
+                
+                // Confetti burst
+                const rect = note.getBoundingClientRect();
+                confetti({
+                    particleCount: 30,
+                    spread: 60,
+                    origin: {
+                        x: (rect.left + rect.width / 2) / window.innerWidth,
+                        y: (rect.top + rect.height / 2) / window.innerHeight
+                    },
+                    colors: ['#ffffff', '#ffd700'],
+                    scalar: 0.8
+                });
+            }
+        }
+
+        // Checklist Toggle
+        function toggleCheck(item) {
+            item.classList.toggle('checked');
+            
+            if (item.classList.contains('checked')) {
+                confetti({
+                    particleCount: 20,
+                    spread: 40,
+                    origin: { y: 0.7 },
+                    colors: ['#ff0040'],
+                    scalar: 0.5
+                });
+            }
+        }
+
+        // Heart Explosion
+        function explodeHearts() {
+            const colors = ['#ff0040', '#ff4d8d', '#ffffff'];
+            
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    confetti({
+                        particleCount: 50,
+                        spread: 100,
+                        origin: { y: 0.5, x: 0.5 },
+                        colors: colors,
+                        shapes: ['heart'],
+                        scalar: 2
+                    });
+                }, i * 100);
+            }
+        }
+
+        // Grand Finale
+        function grandFinale() {
+            const duration = 5000;
+            const end = Date.now() + duration;
+
+            const frame = () => {
+                confetti({
+                    particleCount: 10,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 },
+                    colors: ['#ff0040', '#ff4d8d', '#ffffff']
+                });
+                confetti({
+                    particleCount: 10,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 },
+                    colors: ['#ff0040', '#ff4d8d', '#ffffff']
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            };
+            
+            frame();
+
+            gsap.to('.big-text', {
+                scale: 1.2,
+                duration: 0.5,
+                yoyo: true,
+                repeat: 3
+            });
+        }
+
+        // Letter text reveal
+        gsap.utils.toArray('.letter-text p').forEach((p, i) => {
+            gsap.to(p, {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                delay: i * 0.3,
+                scrollTrigger: {
+                    trigger: p,
+                    start: 'top 85%'
+                }
+            });
+        });
+    </script>
+</body>
+</html>
